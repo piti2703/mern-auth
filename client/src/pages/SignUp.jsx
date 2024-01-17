@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -26,10 +27,11 @@ const SignUp = () => {
       const data = await res.json();
       setLoading(false);
 
-      if (!data.success) {
+      if (data.success === false) {
         setError(true);
         return;
       }
+      navigate('/')
     } catch (error) {
       setLoading(false);
       setError(true);
